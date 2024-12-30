@@ -14,6 +14,7 @@ app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true, 
 }));
+app.get('/', (req, res) => res.send('Hello from backend!'));
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
