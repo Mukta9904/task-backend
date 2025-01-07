@@ -44,13 +44,13 @@ export const getTasks = async (req, res) => {
   const { priority, status, sortBy, order } = req.query;
 
   try {
-    const query = { user: req.user.id }; // Fetch tasks for the authenticated user
+    const query = { user: req.user.id };
 
-    // Validate and sanitize the priority filter
+    
     if (priority) {
       const priorityNumber = parseInt(priority, 10);
       if (!isNaN(priorityNumber)) {
-        query.priority = priorityNumber; // Use the sanitized number
+        query.priority = priorityNumber; 
       } else {
         console.log("Invalid priority value:", priority);
         
@@ -129,8 +129,9 @@ export const getStats = async (req, res) => {
       tasks
         .filter((task) => task.status === "finished")
         .reduce(
-          (acc, task) =>
-            acc + (new Date(task.endTime) - new Date(task.startTime)) / 3600000,
+          (acc, task) =>{
+           return acc + (new Date(task.endTime) - new Date(task.startTime)) / 3600000
+          },
           0
         ) / completedTasks || 0;
 
@@ -189,7 +190,7 @@ export const getPriorityStats = async (req, res) => {
                 acc[priority].timeLapsed += timeElapsed > 0 ? timeElapsed : 0;
                 acc[priority].timeToFinish += timeRemaining > 0 ? timeRemaining : 0;
             }
-            return acc;
+         return acc;
         }, {});
 
         // Ensure all priority levels are present in the response
